@@ -51,15 +51,35 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const grid = document.querySelector(".grid");
+  let cardsChosen = [];
+  let cardsChosenIds = [];
 
   const createBoard = () => {
     for (let idx = 0; idx < images.length; idx++) {
       let card = document.createElement("img");
       card.setAttribute("src", "images/blank.png");
       card.setAttribute("data-id", idx);
+      card.addEventListener("click", flipCard);
 
       grid.appendChild(card);
     }
+  };
+
+  function flipCard() {
+    let cardId = this.getAttribute("data-id");
+
+    cardsChosen.push(images[cardId].name);
+    cardsChosenIds.push(cardId);
+
+    this.setAttribute("src", images[cardId].img);
+
+    if (cardsChosen.length === 2) {
+      setTimeout(checkForMatch, 500);
+    }
+  }
+
+  const checkForMatch = () => {
+    alert("checkForMatch");
   };
 
   createBoard();
